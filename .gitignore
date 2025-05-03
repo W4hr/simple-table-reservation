@@ -1,0 +1,37 @@
+# Node modules and build outputs
+node_modules/
+/.svelte-kit
+build/
+.output
+.vercel
+.netlify
+.wrangler
+
+# Database files
+*.db
+
+# Optional OS/system files
+.DS_Store
+Thumbs.db
+
+# Environment and config
+.env
+.env.local
+.npmrc
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Logs
+*.log
+
+# IDE-specific (optional, if team-specific)
+.vscode/
+.idea/
+
+# Prettier ignore (optional redundancy)
+.prettierignore
