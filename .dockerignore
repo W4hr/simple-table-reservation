@@ -1,0 +1,21 @@
+# Docker related files
+Dockerfile
+.dockerignore
+
+# git related files
+.gitignore
+.git
+.gitattributes
+
+# Environment and config
+.npmrc
+.prettierrc
+.eslintrc.cjs
+.graphqlrc
+.editorconfig
+.svelte-kit
+.vscode
+node_modules
+build
+package
+**/.env

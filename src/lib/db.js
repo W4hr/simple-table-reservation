@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3'
 
-const db = new Database('./mydatabase.db')
+const db = new Database('/app/data/database.db')
 db.pragma('foreign_keys = ON');
 
 try {
