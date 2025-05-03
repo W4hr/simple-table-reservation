@@ -47,7 +47,6 @@ export const actions = {
             .filter(seat => data_object[seat] === "on")
             .map(seat => seat.split("-").slice(-1)[0])
         if (reserved_seats_id.length === 0) return
-        console.log(reserved_seats_id)
         let reserve_seat = db.prepare(`
                 UPDATE seats SET reservation_name = ?, reserved = 1 WHERE id = ? AND reserved = 0`
         )

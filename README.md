@@ -41,11 +41,20 @@ The maintainer must define the table/seat structure manually.
 Then run:
 
 ```bash
-node db.js
 node seat.js
 ```
 
-### 4. Run the App Locally
+### 4. Set Environment Variable
+
+Create a `.env` file in the project root and add the following line:
+
+```bash
+NODE_ENV=development
+```
+
+This ensures the app runs in development mode when using `node`.
+
+### 5. Run the App Locally
 
 ```bash
 npm run dev

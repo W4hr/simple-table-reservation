@@ -5,7 +5,6 @@
     let { reserved, reservation_name, selected = $bindable(), id, color = "indigo" } = $props()
 
     let nameHover = $state(false)
-    $inspect(nameHover)
 </script>
 
 <div class="mx-2 my-1">

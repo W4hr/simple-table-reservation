@@ -1,6 +1,8 @@
 import db from "./db.js";
 
-const tableList = JSON.parse(process.env.TABLE_LIST || "[]")
+
+const tableListEnv = JSON.parse(process.env.TABLE_LIST || "[]")
+const tableList = tableListEnv.length >= 1 ? tableListEnv : [10,4,7]
 // each items represents a table so > tableList.length = table count
 // each number represents the tables amount of seats i at the table at index i > tableList[i] = amount of seats at the i'th table
 
