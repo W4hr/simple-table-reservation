@@ -7,8 +7,8 @@
 
     let { data } = $props()
 
-    let tables = data.tables
-    // $inspect(tables)
+    let tables = $state(data.tables)
+    $inspect(tables)
 
     let seats_selected = $derived(tables.flatMap(table => table.seats.filter(seat => seat.selected).map(seat => seat.seat_id)))
     let count_seats = $derived(seats_selected.length)
@@ -18,7 +18,7 @@
 
 <div class="max-w-6xl mx-auto p-6">
     <h1 class="text-3xl font-bold text-gray-800 mb-6">
-        Reserviere dein{count_seats > 1 ? "e" : count_seats == 1 ? "en" : ""} {count_seats !== 1 ? count_seats : ""} Sitz{count_seats > 1 ? "e" : ""} unter dem Namen 
+        Reserviere {count_seats === 0? "ausgewählte Sitze": count_seats === 1? "einen Sitz": `${count_seats} Sitze` } unter dem Namen 
         <label for="nameInput" class="text-indigo-600">{ name ? name : "..." }</label>
     </h1>
     
