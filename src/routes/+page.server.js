@@ -40,7 +40,7 @@ export function load() {
 }
 
 export const actions = {
-    default: async ({ cookies, request }) => {
+    default: async ({ request }) => {
         const data = await request.formData()
         const data_object = Object.fromEntries(data)
         const reserved_seats_id = Object.keys(data_object)
