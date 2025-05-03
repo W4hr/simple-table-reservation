@@ -1,5 +1,7 @@
 <script>
+	import { preventDefault } from "svelte/legacy";
 	import Seat from "../components/Seat.svelte";
+	import { blur, scale } from "svelte/transition";
 
     // Config
     const price_display = false;
@@ -7,13 +9,20 @@
 
     let { data } = $props()
 
-    let tables = $state(data.tables)
-    $inspect(tables)
+    let tables = $state(data.tables.map(table => ({...table, confirmation: false})))
 
     let seats_selected = $derived(tables.flatMap(table => table.seats.filter(seat => seat.selected).map(seat => seat.seat_id)))
     let count_seats = $derived(seats_selected.length)
 
     let name = $state("")
+
+    function selectTable(table) {
+        const table_selected_seats = table.seats.filter(seat => seat.selected).length
+        
+        table.seats.forEach(seat => {
+            seat.selected = table_selected_seats/table.seats.length <= 0.5 //if more then half are selected then unselect them
+        });
+    }
 </script>
 
 <div class="max-w-6xl mx-auto p-6">
@@ -63,9 +72,38 @@
                             {/if}
                         {/each}
                     </div>
-                    <div class="w-full h-24 bg-gray-200 rounded-lg shadow-md flex justify-center text-gray-700 font-bold text-lg opacity-60 items-center z-30">
-                        Tisch #{table.table_id}
+                    <div class="relative w-full h-24">
+                        <button
+                            class="w-full h-full bg-gray-200 rounded-lg shadow-md flex justify-center items-center text-gray-700 font-bold text-lg opacity-60 z-20"
+                            type="button"
+                            onclick={() => table.confirmation = true}
+                        >
+                            Tisch #{table.table_id}
+                        </button>
+                    
+                        {#if table.confirmation && table.seats.filter(seat => seat.reserved == 0).length}
+                            <div class="absolute inset-0 bg-gray-50 bg-opacity-90 flex flex-col justify-center items-center rounded-lg z-30" transition:scale>
+                                <span class="mb-2 text-sm text-center rounded-lg text-gray-500 font-bold">
+                                    {#if table.seats.filter(seat => seat.selected).length/table.seats.length <= 0.5}
+                                        Tisch #{table.table_id} reservieren?
+                                    {:else}
+                                        Tisch #{table.table_id} freigeben?
+                                    {/if}
+                                </span>
+                                <button
+                                    class="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 font-bold text-sm"
+                                    onclick={() => {
+                                        selectTable(table);
+                                        table.confirmation = false;
+                                    }}
+                                    type="button"
+                                >
+                                    Ja
+                                </button>
+                            </div>
+                        {/if}
                     </div>
+                    
                     <div class="flex justify-center mt-4">
                         {#each table.seats as seat, index (seat.seat_id)}
                             {#if index%2==1}
