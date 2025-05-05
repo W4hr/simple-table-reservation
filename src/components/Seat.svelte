@@ -36,6 +36,7 @@
                     transition:blur={{ duration: 500, easing: quadInOut }}>
                 </div>
                 <div class="text-xs rounded-md text-gray-700 shadow-md absolute top-14 text-white text-center px-2 py-1 bg-indigo-400 whitespace-nowrap z-50" transition:blur={{ duration: 500, easing: quadInOut }}>
+                    <p>#{id}</p>
                     {reservation_name}
                 </div>
             {/if}
