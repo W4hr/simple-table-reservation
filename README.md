@@ -77,7 +77,7 @@ You can also deploy the app using Docker:
    ```bash
    docker run -p 3000:3000 \
       -e TABLE_LIST='[6,8,4,10]' \
-      -v /path/to/your/database.db:/external/database.db \
+      -v /path/to/your/database.db:/app/data/database.db \
       simple-table-reservation
    ```
 
