@@ -75,10 +75,18 @@ You can also deploy the app using Docker:
 2. **Run the container with your desired table configuration:**
 
    ```bash
-   docker run -p 3000:3000 -e TABLE_LIST='[6,8,4,10]' simple-table-reservation
+   docker run -p 3000:3000 \
+      -e TABLE_LIST='[6,8,4,10]' \
+      -v /path/to/your/database.db:/external/database.db \
+      simple-table-reservation
    ```
 
-   This example sets up four tables with 6, 8, 4, and 10 seats respectively.
+   This example sets up four tables with 6, 8, 4, and 10 seats respectively. <br>
+   **To start with a fresh database**, simply omit the volume flag:
+
+   ```bash
+   docker run -p 3000:3000 -e TABLE_LIST='[6,8,4,10]' simple-table-reservation
+   ```
 
 3. **Access the app** at [http://localhost:3000](http://localhost:3000).
 
@@ -87,7 +95,9 @@ You can also deploy the app using Docker:
 ## Future Plans
 
 * Docker support ✅
-* Deployment configuration
+* Deployment configuration (✅)
+* administration interface
+* add logging
 
 ## License
 
