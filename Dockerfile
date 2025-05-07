@@ -22,6 +22,7 @@ COPY package.json .
 
 COPY src/lib/seed.js ./seed.js
 COPY src/lib/db.js ./db.js
+COPY src/lib/adminTasks.js ./adminTasks.js
 COPY entrypoint.sh ./
 
 RUN mkdir -p /app/data \

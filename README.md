@@ -133,6 +133,17 @@ To unreserve all seats currently reserved by "Jane Doe":
 node ./src/lib/adminTasks.js unreserveName "Jane Doe"
 ```
 
+---
+💡 **Running admin tasks inside Docker:**  
+You can execute adminTasks.js inside the running container using Docker exec:  
+```bash
+docker exec -it <container_name_or_id> node adminTasks.js <functionName> [arguments...]
+```  
+For example, to unreserve seat with ID `216`:  
+```bash
+docker exec -it <container_name_or_id> node adminTasks.js unreserveSeat 216
+```
+
 ## Future Plans
 
 * Docker support ✅
