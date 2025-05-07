@@ -92,6 +92,47 @@ You can also deploy the app using Docker:
 
 > Note: The `TABLE_LIST` environment variable should be a JSON array representing your table layout.
 
+## Admin Tasks
+
+The `adminTasks.js` script provides command-line tools for managing the reservation system's database directly. These tasks are useful for administrative actions like clearing reservations or adjusting table setups without interacting with the UI or re-initializing the entire database.
+
+**Base Command:**
+
+```bash
+node ./src/lib/adminTasks.js <functionName> [arguments...]
+```
+
+If no function name is provided or if the function name is not recognized, the script will display a list of available functions.
+
+**Available Functions:**
+
+* **`unreserveSeat <seat_id>`**: Clears the reservation for a specific seat.
+    * Example: `node ./src/lib/adminTasks.js unreserveSeat 15`
+* **`unreserveSeats`**: Clears all reservations from all seats.
+    * Example: `node ./src/lib/adminTasks.js unreserveSeats`
+* **`unreserveName <name>`**: Clears all reservations made under a specific name.
+    * Example: `node ./src/lib/adminTasks.js unreserveName "John Doe"`
+* **`addTable <seat_count>`**: Adds a new table with the specified number of seats. Seats will have a default color of "gray".
+    * Example: `node ./src/lib/adminTasks.js addTable 8`
+* **`deleteTable <table_id>`**: Deletes a table and all its associated seats.
+    * Example: `node ./src/lib/adminTasks.js deleteTable 3`
+* **`deleteSeat <seat_id>`**: Deletes a specific seat.
+    * Example: `node ./src/lib/adminTasks.js deleteSeat 216`
+* **`clearTables`**: Deletes all seats and all tables from the database. Use with caution as this will empty your entire seating arrangement.
+    * Example: `node ./src/lib/adminTasks.js clearTables`
+
+**Example Usage:**
+
+To delete seat with ID 216:
+```bash
+node ./src/lib/adminTasks.js deleteSeat 216
+```
+
+To unreserve all seats currently reserved by "Jane Doe":
+```bash
+node ./src/lib/adminTasks.js unreserveName "Jane Doe"
+```
+
 ## Future Plans
 
 * Docker support ✅
