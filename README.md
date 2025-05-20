@@ -149,7 +149,7 @@ docker exec -it <container_name_or_id> node adminTasks.js unreserveSeat 216
 * Docker support ✅
 * Deployment configuration (✅)
 * administration interface
-* add logging
+* add logging (✅)
 
 ## License
 

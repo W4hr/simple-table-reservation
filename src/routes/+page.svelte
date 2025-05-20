@@ -19,8 +19,10 @@
     function selectTable(table) {
         const table_selected_seats = table.seats.filter(seat => seat.selected).length
         
+        const seat_select = table_selected_seats/table.seats.filter(seat => !seat.reserved).length <= 0.5
+
         table.seats.forEach(seat => {
-            seat.selected = table_selected_seats/table.seats.length <= 0.5 //if more then half are selected then unselect them
+            if (!seat.reserved) seat.selected = seat_select //if more then half are selected then unselect them
         });
     }
 </script>
@@ -84,7 +86,7 @@
                         {#if table.confirmation && table.seats.filter(seat => seat.reserved == 0).length}
                             <div class="absolute inset-0 bg-gray-50 bg-opacity-90 flex flex-col justify-center items-center rounded-lg z-30" transition:scale>
                                 <span class="mb-2 text-sm text-center rounded-lg text-gray-500 font-bold">
-                                    {#if table.seats.filter(seat => seat.selected).length/table.seats.length <= 0.5}
+                                    {#if table.seats.filter(seat => seat.selected).length/table.seats.filter(seat=>!seat.reserved).length <= 0.5}
                                         Tisch #{table.table_id} reservieren?
                                     {:else}
                                         Tisch #{table.table_id} freigeben?
