@@ -1,5 +1,4 @@
 <script>
-	import { preventDefault } from "svelte/legacy";
 	import Seat from "../components/Seat.svelte";
 	import { blur, scale, slide } from "svelte/transition";
 
@@ -31,9 +30,9 @@
         Object.entries(
             data.tables
                 .flatMap(table => table.seats)
-                .filter(seat => seat.reserved && seat.reservation_name)
                 .reduce((accumulator, seat) => {
-                    accumulator[seat.reservation_name] = (accumulator[seat.reservation_name] || 0) + 1;
+                    if (seat.reserved && seat.reservation_name) accumulator[seat.reservation_name] = (accumulator[seat.reservation_name] || 0) + 1
+                    else accumulator["Frei"] = (accumulator["Frei"] | 0) + 1
                     return accumulator;
                     }, {}
                 )
@@ -87,8 +86,9 @@
                 <input type="checkbox" bind:checked={nameCount_display} hidden>
             </lable>
         </div>
+        <div class="h-2 mb-0"></div>
         {#if nameCount_display}
-            <div class="h-1" transition:slide></div>
+            <div class="h-2 mb-0" transition:slide></div>
         {/if}
         <div class="flex items-center justify-center">
             {#if nameCount_display}
@@ -97,17 +97,26 @@
                         <div class="bg-indigo-400 px-4 py-3">
                             <h2 class="text-lg font-bold text-white">Reservierungen nach Namen</h2>
                         </div>
-                        <div class="divide-y divide-gray-200">
+                        <div class="divide-y divide-gray-200 max-h-100 overflow-scroll">
                             {#each nameCount as person}
-                                <div class="flex items-center justify-between px-4 py-3 hover:bg-gray-50">
-                                    <div class="flex items-center">
-                                        <span class="flex items-center justify-center w-10 h-10 mr-3 text-sm font-medium text-white bg-indigo-400 rounded-full">{person.name.split(" ").map(subname => subname.charAt(0)).join("")}</span>
-                                        <span class="font-medium text-gray-800">{person.name}</span>
+                                {#if person.name === "Frei"}
+                                    <div class="flex items-center justify-between px-8 py-3 bg-green-50 hover:bg-green-100 duration-200">
+                                        <span class="font-medium text-green-800">Freie Sitze</span>
+                                        <div class="flex items-center justify-center px-3 py-1 text-sm font-medium text-green-700 bg-green-100 rounded-full">
+                                            {person.count} {person.count === 1 ? 'Sitz' : 'Sitze'}
+                                        </div>
                                     </div>
-                                    <div class="flex items-center justify-center px-3 py-1 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-full">
-                                        {person.count} {person.count === 1 ? 'Sitz' : 'Sitze'}
+                                {:else}
+                                    <div class="flex items-center justify-between px-4 py-3 hover:bg-gray-50 duration-200">
+                                        <div class="flex items-center">
+                                            <span class="flex items-center justify-center w-10 h-10 mr-3 text-sm font-medium text-white bg-indigo-400 rounded-full">{person.name.split(" ").map(subname => subname.charAt(0)).slice(0,2).join("")}</span>
+                                            <span class="font-medium text-gray-800">{person.name}</span>
+                                        </div>
+                                        <div class="flex items-center justify-center px-3 py-1 text-sm font-medium text-indigo-700 bg-indigo-100 rounded-full">
+                                            {person.count} {person.count === 1 ? 'Sitz' : 'Sitze'}
+                                        </div>
                                     </div>
-                                </div>
+                                {/if}
                             {/each}
                         </div>
                     </div>
@@ -115,7 +124,7 @@
             {/if}
         </div>
 
-        <div class="mt-8 flex gap-8 flex-wrap justify-center">
+        <div class="mt-2 flex gap-8 flex-wrap justify-center">
             {#each tables as table (table.table_id)}
                 <div class="mb-6 max-w-min">
                     <div class="flex justify-center mb-4">

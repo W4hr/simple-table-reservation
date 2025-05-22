@@ -25,9 +25,11 @@
                {reserved ? 'bg-indigo-400 text-white hover:bg-indigo-400 hover:cursor-not-allowed' : ''}"
         onmouseenter={() => nameHover = true}
         onmouseleave={() => nameHover = false}
+        onmousedown={() => nameHover = true}
+        onmouseup={() => setInterval(() => nameHover = false, 2000)}
     >
         {#if reservation_name}
-            <span class="text-lg">{reservation_name.split(" ").map(subname => subname.charAt(0)).join("")}</span>
+            <span class="text-lg">{reservation_name.split(" ").map(subname => subname.charAt(0)).slice(0,3).join("")}</span>
             {#if nameHover}
                 <div class="absolute left-1/2 top-12.5 -translate-x-1/2 w-0 h-0 z-50
                     border-l-[10px] border-l-transparent 
